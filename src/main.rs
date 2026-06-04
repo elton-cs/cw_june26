@@ -1,3 +1,6 @@
+use bevy::prelude::*;
+use cw_june26::game_plugin;
+
 fn main() {
-    println!("Hello, world!");
+    App::new().add_plugins(game_plugin).run();
 }
