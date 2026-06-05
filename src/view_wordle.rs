@@ -60,7 +60,10 @@ pub fn spawn_wordle_input(mut commands: Commands) {
         });
 }
 
-pub fn spawn_frag_display(mut commands: Commands, windows: Query<&Window, With<PrimaryWindow>>) {
+pub fn spawn_wordle_frag_display(
+    mut commands: Commands,
+    windows: Query<&Window, With<PrimaryWindow>>,
+) {
     let box_width = (DISPLAY_COLUMNS as f32 - 1.0) * DISPLAY_TILE_SPACING
         + DISPLAY_TILE_SIZE
         + DISPLAY_PADDING * 2.0;
@@ -126,7 +129,10 @@ pub fn spawn_frag_display(mut commands: Commands, windows: Query<&Window, With<P
         });
 }
 
-pub fn spawn_rune_display(mut commands: Commands, windows: Query<&Window, With<PrimaryWindow>>) {
+pub fn spawn_wordle_rune_display(
+    mut commands: Commands,
+    windows: Query<&Window, With<PrimaryWindow>>,
+) {
     let box_width = (DISPLAY_COLUMNS as f32 - 1.0) * DISPLAY_TILE_SPACING
         + DISPLAY_TILE_SIZE
         + DISPLAY_PADDING * 2.0;

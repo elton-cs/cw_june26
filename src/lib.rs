@@ -17,7 +17,8 @@ use crate::view_login::{
     spawn_login_title,
 };
 use crate::view_wordle::{
-    hide_wordle_elements, show_wordle_elements, spawn_frag_display, spawn_rune_display, spawn_wordle_input,
+    hide_wordle_elements, show_wordle_elements, spawn_wordle_frag_display, spawn_wordle_input,
+    spawn_wordle_rune_display,
 };
 use bevy::prelude::*;
 
@@ -37,8 +38,8 @@ pub fn plugin(app: &mut App) {
             spawn_login_input_field,
             spawn_login_join_button,
             spawn_wordle_input,
-            spawn_frag_display,
-            spawn_rune_display,
+            spawn_wordle_frag_display,
+            spawn_wordle_rune_display,
         ),
     );
 
