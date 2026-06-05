@@ -10,6 +10,10 @@ pub const FRAG_RUNE_TILE_SPACING: f32 = FRAG_RUNE_TILE_SIZE * 1.15;
 pub const FRAG_RUNE_PADDING: f32 = 18.;
 pub const FRAG_RUNE_EDGE_MARGIN: f32 = 16.;
 
+// Crossword grid dimensions
+pub const CROSSWORD_GRID_TILES_X: usize = 9;
+pub const CROSSWORD_GRID_TILES_Y: usize = 7;
+
 pub const TITLE: &str = "CROSSWORDLE";
 pub const TILE_SIZE: f32 = 80.;
 pub const TILE_SPACING: f32 = TILE_SIZE * 1.1;

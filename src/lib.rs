@@ -15,8 +15,8 @@ use crate::view_crafting::{
     spawn_crafting_rune_display,
 };
 use crate::view_crossword::{
-    hide_crossword_elements, show_crossword_elements, spawn_crossword_frag_display,
-    spawn_crossword_rune_display,
+    hide_crossword_elements, show_crossword_elements, spawn_crossword_board,
+    spawn_crossword_frag_display, spawn_crossword_rune_display,
 };
 use crate::view_home::{
     hide_home_elements, show_home_elements, spawn_home_exit_button, spawn_home_play_button,
@@ -52,6 +52,7 @@ pub fn plugin(app: &mut App) {
             spawn_wordle_rune_display,
             spawn_crafting_frag_display,
             spawn_crafting_rune_display,
+            spawn_crossword_board,
             spawn_crossword_frag_display,
             spawn_crossword_rune_display,
         ),

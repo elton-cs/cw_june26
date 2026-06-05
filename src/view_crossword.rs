@@ -1,11 +1,46 @@
 use crate::constants::{
-    FRAG_RUNE_COLUMNS, FRAG_RUNE_EDGE_MARGIN, FRAG_RUNE_PADDING, FRAG_RUNE_ROWS,
-    FRAG_RUNE_TILE_COUNT, FRAG_RUNE_TILE_SIZE, FRAG_RUNE_TILE_SPACING,
+    CROSSWORD_GRID_TILES_X, CROSSWORD_GRID_TILES_Y, FRAG_RUNE_COLUMNS, FRAG_RUNE_EDGE_MARGIN,
+    FRAG_RUNE_PADDING, FRAG_RUNE_ROWS, FRAG_RUNE_TILE_COUNT, FRAG_RUNE_TILE_SIZE,
+    FRAG_RUNE_TILE_SPACING, TILE_SIZE, TILE_SPACING,
 };
 use crate::view_ty::{DisplaySide, DisplayTileColor, ViewCrosswordElement, ViewTile};
 use bevy::color::palettes::tailwind::*;
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
+
+pub fn spawn_crossword_board(mut commands: Commands) {
+    let board_width = CROSSWORD_GRID_TILES_X as f32;
+    let board_height = CROSSWORD_GRID_TILES_Y as f32;
+    let start_x = -((board_width - 1.0) * TILE_SPACING) / 2.0;
+    let start_y = ((board_height - 1.0) * TILE_SPACING) / 2.0;
+
+    commands
+        .spawn((
+            ViewCrosswordElement,
+            Transform::from_xyz(0.0, 0.0, 0.0),
+            Visibility::Hidden,
+        ))
+        .with_children(|p1| {
+            for row in 0..CROSSWORD_GRID_TILES_Y {
+                for col in 0..CROSSWORD_GRID_TILES_X {
+                    let x = start_x + col as f32 * TILE_SPACING;
+                    let y = start_y - row as f32 * TILE_SPACING;
+
+                    p1.spawn((
+                        ViewTile,
+                        Transform::from_xyz(x, y, 1.0),
+                        Visibility::default(),
+                    ))
+                    .with_children(|p2| {
+                        p2.spawn((
+                            Sprite::from_color(SLATE_200, Vec2::new(TILE_SIZE, TILE_SIZE)),
+                            Transform::from_xyz(0.0, 0.0, 0.0),
+                        ));
+                    });
+                }
+            }
+        });
+}
 
 pub fn spawn_crossword_frag_display(
     mut commands: Commands,
