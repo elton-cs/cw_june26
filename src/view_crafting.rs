@@ -1,12 +1,11 @@
-use bevy::color::palettes::tailwind::*;
-use bevy::prelude::*;
-use bevy::window::PrimaryWindow;
-
 use crate::constants::{
     FRAG_RUNE_COLUMNS, FRAG_RUNE_EDGE_MARGIN, FRAG_RUNE_PADDING, FRAG_RUNE_ROWS,
     FRAG_RUNE_TILE_COUNT, FRAG_RUNE_TILE_SIZE, FRAG_RUNE_TILE_SPACING,
 };
 use crate::view_ty::{DisplaySide, DisplayTileColor, ViewCraftingElement, ViewTile};
+use bevy::color::palettes::tailwind::*;
+use bevy::prelude::*;
+use bevy::window::PrimaryWindow;
 
 pub fn spawn_crafting_frag_display(
     mut commands: Commands,

@@ -1,11 +1,10 @@
-use bevy::color::palettes::tailwind::*;
-use bevy::prelude::*;
-
 use crate::constants::{
     HOME_BUTTON_FONT_SIZE, HOME_BUTTON_HEIGHT, HOME_BUTTON_WIDTH, HOME_BUTTON_Y_SPACING,
     HOME_BUTTON_Y_START, TILE_SIZE, TILE_SPACING, TITLE,
 };
 use crate::view_ty::{ViewButton, ViewHomeElement, ViewTile, ViewTitle};
+use bevy::color::palettes::tailwind::*;
+use bevy::prelude::*;
 
 pub fn spawn_home_title(mut commands: Commands) {
     let title_chars: Vec<char> = TITLE.to_ascii_uppercase().chars().collect();

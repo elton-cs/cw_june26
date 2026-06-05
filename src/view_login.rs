@@ -1,9 +1,3 @@
-use bevy::color::palettes::{
-    css::{BLACK, WHITE},
-    tailwind::*,
-};
-use bevy::prelude::*;
-
 use crate::constants::{
     LOGIN_BUTTON_FONT_SIZE, LOGIN_BUTTON_HEIGHT, LOGIN_BUTTON_WIDTH, LOGIN_ELEMENT_Y_SPACING,
     LOGIN_INPUT_HEIGHT, LOGIN_INPUT_WIDTH, LOGIN_INPUT_Y_START, TILE_SIZE, TILE_SPACING, TITLE,
@@ -11,6 +5,11 @@ use crate::constants::{
 use crate::view_ty::{
     LoginInput, ViewButton, ViewInputField, ViewInputText, ViewLoginElement, ViewTile, ViewTitle,
 };
+use bevy::color::palettes::{
+    css::{BLACK, WHITE},
+    tailwind::*,
+};
+use bevy::prelude::*;
 
 pub fn spawn_login_title(mut commands: Commands) {
     let title_chars: Vec<char> = TITLE.to_ascii_uppercase().chars().collect();
