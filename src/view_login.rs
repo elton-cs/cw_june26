@@ -69,14 +69,12 @@ pub fn spawn_login_title(mut commands: Commands) {
                         p2.spawn((
                             Sprite::from_color(SLATE_400, Vec2::new(TILE_SIZE, TILE_SIZE)),
                             Transform::from_xyz(x, 0.0, 0.0),
-                            Visibility::default(),
                         ));
                         p2.spawn((
                             Text2d::new(letter.to_string()),
                             TextColor::BLACK,
                             text_font.clone(),
                             Transform::from_xyz(x, 0.0, 1.0),
-                            Visibility::default(),
                         ));
                     });
             }
@@ -107,7 +105,6 @@ pub fn spawn_login_input_field(mut commands: Commands) {
             p1.spawn((
                 Sprite::from_color(SLATE_200, Vec2::new(LOGIN_INPUT_WIDTH, LOGIN_INPUT_HEIGHT)),
                 Transform::from_xyz(0.0, 0.0, 0.0),
-                Visibility::default(),
             ));
             p1.spawn((
                 LoginInputText,
@@ -115,7 +112,6 @@ pub fn spawn_login_input_field(mut commands: Commands) {
                 TextColor(placeholder_color),
                 input_font.clone(),
                 Transform::from_xyz(0.0, 0.0, 1.0),
-                Visibility::default(),
             ));
         });
 }
@@ -138,14 +134,12 @@ pub fn spawn_login_join_button(mut commands: Commands) {
                     Vec2::new(LOGIN_BUTTON_WIDTH, LOGIN_BUTTON_HEIGHT),
                 ),
                 Transform::from_xyz(0.0, 0.0, 0.0),
-                Visibility::default(),
             ));
             p1.spawn((
                 Text2d::new("JOIN"),
                 TextColor::BLACK,
                 join_font,
                 Transform::from_xyz(0.0, 0.0, 1.0),
-                Visibility::default(),
             ));
         });
 }

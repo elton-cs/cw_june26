@@ -2,10 +2,10 @@ mod game_states;
 mod setup;
 mod view_home;
 mod view_login;
+mod view_wordle;
 
 use crate::game_states::{
-    View, enter_crafting, enter_crossword, enter_wordle, exit_crafting, exit_crossword,
-    exit_wordle, system_cycle_view_state,
+    View, enter_crafting, enter_crossword, exit_crafting, exit_crossword, system_cycle_view_state,
 };
 use crate::setup::setup_system;
 use crate::view_home::{
@@ -16,6 +16,7 @@ use crate::view_login::{
     hide_login_elements, show_login_elements, spawn_login_input_field, spawn_login_join_button,
     spawn_login_title,
 };
+use crate::view_wordle::{hide_wordle_elements, show_wordle_elements, spawn_wordle_input};
 use bevy::prelude::*;
 
 pub fn plugin(app: &mut App) {
@@ -33,6 +34,7 @@ pub fn plugin(app: &mut App) {
             spawn_login_title,
             spawn_login_input_field,
             spawn_login_join_button,
+            spawn_wordle_input,
         ),
     );
 
@@ -40,9 +42,9 @@ pub fn plugin(app: &mut App) {
     app.add_systems(OnExit(View::Home), hide_home_elements);
     app.add_systems(OnEnter(View::Login), show_login_elements);
     app.add_systems(OnExit(View::Login), hide_login_elements);
+    app.add_systems(OnEnter(View::Wordle), show_wordle_elements);
+    app.add_systems(OnExit(View::Wordle), hide_wordle_elements);
 
-    app.add_systems(OnEnter(View::Wordle), enter_wordle);
-    app.add_systems(OnExit(View::Wordle), exit_wordle);
     app.add_systems(OnEnter(View::Crossword), enter_crossword);
     app.add_systems(OnExit(View::Crossword), exit_crossword);
     app.add_systems(OnEnter(View::Crafting), enter_crafting);
