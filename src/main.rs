@@ -1,6 +1,5 @@
 use bevy::prelude::*;
-use cw_june26::game_plugin;
 
 fn main() {
-    App::new().add_plugins(game_plugin).run();
+    App::new().add_plugins(cw_june26::plugin).run();
 }
