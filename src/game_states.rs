@@ -10,8 +10,8 @@ pub enum View {
     Crafting,
 }
 
-pub fn enter_home() {}
 pub fn exit_home() {}
+
 pub fn enter_login() {}
 pub fn exit_login() {}
 pub fn enter_wordle() {}
