@@ -1,13 +1,23 @@
+mod constants;
 mod game_states;
 mod setup;
+mod view_crafting;
+mod view_crossword;
 mod view_home;
 mod view_login;
+mod view_ty;
 mod view_wordle;
 
-use crate::game_states::{
-    View, enter_crafting, enter_crossword, exit_crafting, exit_crossword, system_cycle_view_state,
-};
+use crate::game_states::{View, system_cycle_view_state};
 use crate::setup::setup_system;
+use crate::view_crafting::{
+    hide_crafting_elements, show_crafting_elements, spawn_crafting_frag_display,
+    spawn_crafting_rune_display,
+};
+use crate::view_crossword::{
+    hide_crossword_elements, show_crossword_elements, spawn_crossword_frag_display,
+    spawn_crossword_rune_display,
+};
 use crate::view_home::{
     hide_home_elements, show_home_elements, spawn_home_exit_button, spawn_home_play_button,
     spawn_home_title,
@@ -40,6 +50,10 @@ pub fn plugin(app: &mut App) {
             spawn_wordle_input,
             spawn_wordle_frag_display,
             spawn_wordle_rune_display,
+            spawn_crafting_frag_display,
+            spawn_crafting_rune_display,
+            spawn_crossword_frag_display,
+            spawn_crossword_rune_display,
         ),
     );
 
@@ -49,11 +63,10 @@ pub fn plugin(app: &mut App) {
     app.add_systems(OnExit(View::Login), hide_login_elements);
     app.add_systems(OnEnter(View::Wordle), show_wordle_elements);
     app.add_systems(OnExit(View::Wordle), hide_wordle_elements);
-
-    app.add_systems(OnEnter(View::Crossword), enter_crossword);
-    app.add_systems(OnExit(View::Crossword), exit_crossword);
-    app.add_systems(OnEnter(View::Crafting), enter_crafting);
-    app.add_systems(OnExit(View::Crafting), exit_crafting);
+    app.add_systems(OnEnter(View::Crossword), show_crossword_elements);
+    app.add_systems(OnExit(View::Crossword), hide_crossword_elements);
+    app.add_systems(OnEnter(View::Crafting), show_crafting_elements);
+    app.add_systems(OnExit(View::Crafting), hide_crafting_elements);
 
     app.add_systems(Update, system_cycle_view_state);
 }

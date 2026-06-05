@@ -4,47 +4,13 @@ use bevy::color::palettes::{
 };
 use bevy::prelude::*;
 
-#[derive(Component)]
-pub struct ViewLoginElement;
-
-#[derive(Component)]
-pub struct LoginTitle;
-
-#[derive(Component)]
-pub struct LoginTile;
-
-#[derive(Component)]
-pub struct LoginInputField;
-
-#[derive(Component)]
-pub struct LoginInputText;
-
-#[derive(Component)]
-pub struct LoginJoinButton;
-
-#[allow(dead_code)]
-#[derive(Component)]
-pub struct LoginInput {
-    pub placeholder: String,
-    pub input: String,
-    pub placeholder_color: Color,
-    pub input_color: Color,
-}
-
-const TITLE: &str = "CROSSWORDLE";
-const TILE_SIZE: f32 = 80.;
-const TILE_SPACING: f32 = TILE_SIZE * 1.1;
-
-const LOGIN_BUTTON_WIDTH: f32 = 200.0;
-const LOGIN_BUTTON_HEIGHT: f32 = 60.0;
-const LOGIN_INPUT_WIDTH: f32 = 600.0;
-const LOGIN_INPUT_HEIGHT: f32 = 60.0;
-const LOGIN_INPUT_Y_START: f32 = -140.0;
-const LOGIN_ELEMENT_Y_SPACING: f32 = 80.0;
-const LOGIN_BUTTON_FONT_SIZE: f32 = 28.;
-
-#[allow(dead_code)]
-const LOGIN_INPUT_MAX_LEN: usize = 30;
+use crate::constants::{
+    LOGIN_BUTTON_FONT_SIZE, LOGIN_BUTTON_HEIGHT, LOGIN_BUTTON_WIDTH, LOGIN_ELEMENT_Y_SPACING,
+    LOGIN_INPUT_HEIGHT, LOGIN_INPUT_WIDTH, LOGIN_INPUT_Y_START, TILE_SIZE, TILE_SPACING, TITLE,
+};
+use crate::view_ty::{
+    LoginInput, ViewButton, ViewInputField, ViewInputText, ViewLoginElement, ViewTile, ViewTitle,
+};
 
 pub fn spawn_login_title(mut commands: Commands) {
     let title_chars: Vec<char> = TITLE.to_ascii_uppercase().chars().collect();
@@ -55,7 +21,7 @@ pub fn spawn_login_title(mut commands: Commands) {
 
     commands
         .spawn((
-            LoginTitle,
+            ViewTitle,
             ViewLoginElement,
             Transform::from_xyz(0.0, 100.0, 0.0),
             Visibility::Hidden,
@@ -64,7 +30,7 @@ pub fn spawn_login_title(mut commands: Commands) {
             for (index, letter) in title_chars.iter().enumerate() {
                 let x = start_x + index as f32 * TILE_SPACING;
 
-                p1.spawn((LoginTile, Transform::default(), Visibility::default()))
+                p1.spawn((ViewTile, Transform::default(), Visibility::default()))
                     .with_children(|p2| {
                         p2.spawn((
                             Sprite::from_color(SLATE_400, Vec2::new(TILE_SIZE, TILE_SIZE)),
@@ -90,7 +56,7 @@ pub fn spawn_login_input_field(mut commands: Commands) {
 
     commands
         .spawn((
-            LoginInputField,
+            ViewInputField,
             LoginInput {
                 placeholder: placeholder.clone(),
                 input: String::new(),
@@ -107,7 +73,7 @@ pub fn spawn_login_input_field(mut commands: Commands) {
                 Transform::from_xyz(0.0, 0.0, 0.0),
             ));
             p1.spawn((
-                LoginInputText,
+                ViewInputText,
                 Text2d::new(placeholder.clone()),
                 TextColor(placeholder_color),
                 input_font.clone(),
@@ -122,7 +88,7 @@ pub fn spawn_login_join_button(mut commands: Commands) {
 
     commands
         .spawn((
-            LoginJoinButton,
+            ViewButton,
             ViewLoginElement,
             Transform::from_xyz(0.0, join_y, 0.0),
             Visibility::Hidden,

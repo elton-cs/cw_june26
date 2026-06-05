@@ -1,27 +1,11 @@
 use bevy::color::palettes::tailwind::*;
 use bevy::prelude::*;
 
-#[derive(Component)]
-pub struct ViewHomeElement;
-
-#[derive(Component)]
-pub struct HomeTitle;
-
-#[derive(Component)]
-pub struct HomeTile;
-
-#[derive(Component)]
-pub struct HomeButton;
-
-const TITLE: &str = "CROSSWORDLE";
-const TILE_SIZE: f32 = 80.;
-const TILE_SPACING: f32 = TILE_SIZE * 1.1;
-
-const HOME_BUTTON_WIDTH: f32 = 200.0;
-const HOME_BUTTON_HEIGHT: f32 = 60.0;
-const HOME_BUTTON_Y_START: f32 = -140.0;
-const HOME_BUTTON_Y_SPACING: f32 = 80.0;
-const HOME_BUTTON_FONT_SIZE: f32 = 28.;
+use crate::constants::{
+    HOME_BUTTON_FONT_SIZE, HOME_BUTTON_HEIGHT, HOME_BUTTON_WIDTH, HOME_BUTTON_Y_SPACING,
+    HOME_BUTTON_Y_START, TILE_SIZE, TILE_SPACING, TITLE,
+};
+use crate::view_ty::{ViewButton, ViewHomeElement, ViewTile, ViewTitle};
 
 pub fn spawn_home_title(mut commands: Commands) {
     let title_chars: Vec<char> = TITLE.to_ascii_uppercase().chars().collect();
@@ -32,8 +16,8 @@ pub fn spawn_home_title(mut commands: Commands) {
 
     commands
         .spawn((
-            HomeTitle,
             ViewHomeElement,
+            ViewTitle,
             Transform::from_xyz(0.0, 100.0, 0.0),
             Visibility::Visible,
         ))
@@ -41,7 +25,7 @@ pub fn spawn_home_title(mut commands: Commands) {
             for (index, letter) in title_chars.iter().enumerate() {
                 let x = start_x + index as f32 * TILE_SPACING;
 
-                p1.spawn((HomeTile, Transform::default(), Visibility::default()))
+                p1.spawn((ViewTile, Transform::default(), Visibility::default()))
                     .with_children(|p2| {
                         p2.spawn((
                             Sprite::from_color(SLATE_400, Vec2::new(TILE_SIZE, TILE_SIZE)),
@@ -64,7 +48,7 @@ pub fn spawn_home_play_button(mut commands: Commands) {
 
     commands
         .spawn((
-            HomeButton,
+            ViewButton,
             ViewHomeElement,
             Transform::from_xyz(0.0, play_y, 0.0),
             Visibility::Visible,
@@ -89,7 +73,7 @@ pub fn spawn_home_exit_button(mut commands: Commands) {
 
     commands
         .spawn((
-            HomeButton,
+            ViewButton,
             ViewHomeElement,
             Transform::from_xyz(0.0, exit_y, 0.0),
             Visibility::Visible,

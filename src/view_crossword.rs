@@ -4,56 +4,15 @@ use bevy::window::PrimaryWindow;
 
 use crate::constants::{
     FRAG_RUNE_COLUMNS, FRAG_RUNE_EDGE_MARGIN, FRAG_RUNE_PADDING, FRAG_RUNE_ROWS,
-    FRAG_RUNE_TILE_COUNT, FRAG_RUNE_TILE_SIZE, FRAG_RUNE_TILE_SPACING, WORDLE_TILE_SIZE,
-    WORDLE_TILE_SPACING, WORDLE_WORD,
+    FRAG_RUNE_TILE_COUNT, FRAG_RUNE_TILE_SIZE, FRAG_RUNE_TILE_SPACING,
 };
-use crate::view_ty::{DisplaySide, DisplayTileColor, ViewTile, ViewWordleElement};
+use crate::view_ty::{DisplaySide, DisplayTileColor, ViewCrosswordElement, ViewTile};
 
-pub fn spawn_wordle_input(mut commands: Commands) {
-    let wordle_chars: Vec<char> = WORDLE_WORD.chars().collect();
-    let tile_count = wordle_chars.len();
-    let start_x = -((tile_count as f32 - 1.0) * WORDLE_TILE_SPACING) / 2.0;
-    let text_font = TextFont::from_font_size(WORDLE_TILE_SIZE / 2.);
-
-    commands
-        .spawn((
-            ViewWordleElement,
-            Transform::from_xyz(0.0, 0.0, 0.0),
-            Visibility::Hidden,
-        ))
-        .with_children(|p1| {
-            for (index, letter) in wordle_chars.iter().enumerate() {
-                let x = start_x + index as f32 * WORDLE_TILE_SPACING;
-
-                p1.spawn((
-                    ViewTile,
-                    Transform::from_xyz(x, 0.0, 0.0),
-                    Visibility::default(),
-                ))
-                .with_children(|p2| {
-                    p2.spawn((
-                        Sprite::from_color(
-                            GREEN_400,
-                            Vec2::new(WORDLE_TILE_SIZE, WORDLE_TILE_SIZE),
-                        ),
-                        Transform::from_xyz(0.0, 0.0, 0.0),
-                    ));
-                    p2.spawn((
-                        Text2d::new(letter.to_string()),
-                        TextColor::BLACK,
-                        text_font.clone(),
-                        Transform::from_xyz(0.0, 0.0, 1.0),
-                    ));
-                });
-            }
-        });
-}
-
-pub fn spawn_wordle_frag_display(
+pub fn spawn_crossword_frag_display(
     mut commands: Commands,
     windows: Query<&Window, With<PrimaryWindow>>,
 ) {
-    spawn_wordle_alphabet_display(
+    spawn_crossword_alphabet_display(
         &mut commands,
         &windows,
         DisplayTileColor::Purple,
@@ -61,11 +20,11 @@ pub fn spawn_wordle_frag_display(
     );
 }
 
-pub fn spawn_wordle_rune_display(
+pub fn spawn_crossword_rune_display(
     mut commands: Commands,
     windows: Query<&Window, With<PrimaryWindow>>,
 ) {
-    spawn_wordle_alphabet_display(
+    spawn_crossword_alphabet_display(
         &mut commands,
         &windows,
         DisplayTileColor::Blue,
@@ -73,7 +32,19 @@ pub fn spawn_wordle_rune_display(
     );
 }
 
-fn spawn_wordle_alphabet_display(
+pub fn show_crossword_elements(mut elements: Query<&mut Visibility, With<ViewCrosswordElement>>) {
+    for mut visibility in elements.iter_mut() {
+        *visibility = Visibility::Visible;
+    }
+}
+
+pub fn hide_crossword_elements(mut elements: Query<&mut Visibility, With<ViewCrosswordElement>>) {
+    for mut visibility in elements.iter_mut() {
+        *visibility = Visibility::Hidden;
+    }
+}
+
+fn spawn_crossword_alphabet_display(
     commands: &mut Commands,
     windows: &Query<&Window, With<PrimaryWindow>>,
     tile_color: DisplayTileColor,
@@ -104,7 +75,7 @@ fn spawn_wordle_alphabet_display(
 
     commands
         .spawn((
-            ViewWordleElement,
+            ViewCrosswordElement,
             Transform::from_xyz(display_x, 0.0, 0.0),
             Visibility::Hidden,
         ))
@@ -149,16 +120,4 @@ fn spawn_wordle_alphabet_display(
                 });
             }
         });
-}
-
-pub fn show_wordle_elements(mut elements: Query<&mut Visibility, With<ViewWordleElement>>) {
-    for mut visibility in elements.iter_mut() {
-        *visibility = Visibility::Visible;
-    }
-}
-
-pub fn hide_wordle_elements(mut elements: Query<&mut Visibility, With<ViewWordleElement>>) {
-    for mut visibility in elements.iter_mut() {
-        *visibility = Visibility::Hidden;
-    }
 }

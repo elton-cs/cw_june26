@@ -10,11 +10,6 @@ pub enum View {
     Crafting,
 }
 
-pub fn enter_crossword() {}
-pub fn exit_crossword() {}
-pub fn enter_crafting() {}
-pub fn exit_crafting() {}
-
 pub fn system_cycle_view_state(
     state: Res<State<View>>,
     key_input: Res<ButtonInput<KeyCode>>,
