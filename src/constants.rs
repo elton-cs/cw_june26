@@ -36,6 +36,7 @@ pub const VIEW_TITLE_TILE_SPACING: f32 = VIEW_TITLE_TILE_SIZE * 1.1;
 pub const VIEW_WORDLE_WORD: &str = "JESUS";
 pub const VIEW_WORDLE_TILE_SIZE: f32 = 80.;
 pub const VIEW_WORDLE_TILE_SPACING: f32 = VIEW_WORDLE_TILE_SIZE * 1.1;
+pub const VIEW_WORDLE_BOX_PADDING: f32 = 18.;
 
 // Fragment/rune display layout
 pub const VIEW_FRAG_RUNE_TILE_COUNT: usize = 26;

@@ -4,7 +4,8 @@ use crate::constants::{
     VIEW_FRAG_RUNE_ROWS, VIEW_FRAG_RUNE_TILE_COUNT, VIEW_FRAG_RUNE_TILE_SIZE,
     VIEW_FRAG_RUNE_TILE_SPACING, VIEW_FRAGMENT_TILE_COLOR, VIEW_ORIGIN_X, VIEW_ORIGIN_Y,
     VIEW_ORIGIN_Z, VIEW_OVERLAY_Z, VIEW_PANEL_COLOR, VIEW_RUNE_TILE_COLOR, VIEW_TEXT_COLOR,
-    VIEW_WORDLE_TILE_COLOR, VIEW_WORDLE_TILE_SIZE, VIEW_WORDLE_TILE_SPACING, VIEW_WORDLE_WORD,
+    VIEW_WORDLE_BOX_PADDING, VIEW_WORDLE_TILE_COLOR, VIEW_WORDLE_TILE_SIZE,
+    VIEW_WORDLE_TILE_SPACING, VIEW_WORDLE_WORD,
 };
 use crate::view_ty::{DisplaySide, DisplayTileColor, ViewTile, ViewWordleElement};
 use bevy::prelude::*;
@@ -14,6 +15,10 @@ pub fn spawn_wordle_input(mut commands: Commands) {
     let wordle_chars: Vec<char> = VIEW_WORDLE_WORD.chars().collect();
     let tile_count = wordle_chars.len();
     let start_x = -((tile_count as f32 - 1.0) * VIEW_WORDLE_TILE_SPACING) / 2.0;
+    let box_width = (tile_count as f32 - 1.0) * VIEW_WORDLE_TILE_SPACING
+        + VIEW_WORDLE_TILE_SIZE
+        + VIEW_WORDLE_BOX_PADDING * 2.0;
+    let box_height = VIEW_WORDLE_TILE_SIZE + VIEW_WORDLE_BOX_PADDING * 2.0;
     let text_font = TextFont::from_font_size(VIEW_WORDLE_TILE_SIZE / 2.);
 
     commands
@@ -23,6 +28,11 @@ pub fn spawn_wordle_input(mut commands: Commands) {
             Visibility::Hidden,
         ))
         .with_children(|p1| {
+            p1.spawn((
+                Sprite::from_color(VIEW_PANEL_COLOR, Vec2::new(box_width, box_height)),
+                Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
+            ));
+
             for (index, letter) in wordle_chars.iter().enumerate() {
                 let x = start_x + index as f32 * VIEW_WORDLE_TILE_SPACING;
 
