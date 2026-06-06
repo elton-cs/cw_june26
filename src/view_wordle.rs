@@ -2,11 +2,11 @@ use crate::constants::{
     VIEW_CONTENT_Z, VIEW_FRAG_RUNE_COLUMNS, VIEW_FRAG_RUNE_DEFAULT_WINDOW_WIDTH,
     VIEW_FRAG_RUNE_EDGE_MARGIN, VIEW_FRAG_RUNE_NUMBER_BOTTOM_OFFSET, VIEW_FRAG_RUNE_PADDING,
     VIEW_FRAG_RUNE_ROWS, VIEW_FRAG_RUNE_TILE_COUNT, VIEW_FRAG_RUNE_TILE_SIZE,
-    VIEW_FRAG_RUNE_TILE_SPACING, VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z, VIEW_OVERLAY_Z,
-    VIEW_WORDLE_TILE_SIZE, VIEW_WORDLE_TILE_SPACING, VIEW_WORDLE_WORD,
+    VIEW_FRAG_RUNE_TILE_SPACING, VIEW_FRAGMENT_TILE_COLOR, VIEW_ORIGIN_X, VIEW_ORIGIN_Y,
+    VIEW_ORIGIN_Z, VIEW_OVERLAY_Z, VIEW_PANEL_COLOR, VIEW_RUNE_TILE_COLOR, VIEW_TEXT_COLOR,
+    VIEW_WORDLE_TILE_COLOR, VIEW_WORDLE_TILE_SIZE, VIEW_WORDLE_TILE_SPACING, VIEW_WORDLE_WORD,
 };
 use crate::view_ty::{DisplaySide, DisplayTileColor, ViewTile, ViewWordleElement};
-use bevy::color::palettes::tailwind::*;
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
 
@@ -34,14 +34,14 @@ pub fn spawn_wordle_input(mut commands: Commands) {
                 .with_children(|p2| {
                     p2.spawn((
                         Sprite::from_color(
-                            GREEN_400,
+                            Color::from(VIEW_WORDLE_TILE_COLOR),
                             Vec2::new(VIEW_WORDLE_TILE_SIZE, VIEW_WORDLE_TILE_SIZE),
                         ),
                         Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
                     ));
                     p2.spawn((
                         Text2d::new(letter.to_string()),
-                        TextColor::BLACK,
+                        TextColor(VIEW_TEXT_COLOR.into()),
                         text_font.clone(),
                         Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_CONTENT_Z),
                     ));
@@ -99,8 +99,8 @@ fn spawn_wordle_alphabet_display(
     let letter_font = TextFont::from_font_size(VIEW_FRAG_RUNE_TILE_SIZE / 2.0);
     let number_font = TextFont::from_font_size(VIEW_FRAG_RUNE_TILE_SIZE / 4.0);
     let tile_color = match tile_color {
-        DisplayTileColor::Purple => PURPLE_300,
-        DisplayTileColor::Blue => BLUE_300,
+        DisplayTileColor::Purple => VIEW_FRAGMENT_TILE_COLOR,
+        DisplayTileColor::Blue => VIEW_RUNE_TILE_COLOR,
     };
 
     commands
@@ -111,7 +111,7 @@ fn spawn_wordle_alphabet_display(
         ))
         .with_children(|p1| {
             p1.spawn((
-                Sprite::from_color(SLATE_200, Vec2::new(box_width, box_height)),
+                Sprite::from_color(VIEW_PANEL_COLOR, Vec2::new(box_width, box_height)),
                 Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
             ));
 
@@ -130,20 +130,20 @@ fn spawn_wordle_alphabet_display(
                 .with_children(|p2| {
                     p2.spawn((
                         Sprite::from_color(
-                            tile_color,
+                            Color::from(tile_color),
                             Vec2::new(VIEW_FRAG_RUNE_TILE_SIZE, VIEW_FRAG_RUNE_TILE_SIZE),
                         ),
                         Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
                     ));
                     p2.spawn((
                         Text2d::new(letter.to_string()),
-                        TextColor::BLACK,
+                        TextColor(VIEW_TEXT_COLOR.into()),
                         letter_font.clone(),
                         Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_CONTENT_Z),
                     ));
                     p2.spawn((
                         Text2d::new("100"),
-                        TextColor::BLACK,
+                        TextColor(VIEW_TEXT_COLOR.into()),
                         number_font.clone(),
                         Transform::from_xyz(
                             VIEW_ORIGIN_X,

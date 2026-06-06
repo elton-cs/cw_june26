@@ -1,6 +1,7 @@
-use bevy::{color::palettes::tailwind::*, prelude::*};
+use crate::constants::VIEW_BACKGROUND_COLOR;
+use bevy::prelude::*;
 
 pub fn setup_system(mut cmd: Commands) {
-    cmd.insert_resource(ClearColor(SLATE_100.into()));
+    cmd.insert_resource(ClearColor(VIEW_BACKGROUND_COLOR.into()));
     cmd.spawn(Camera2d);
 }

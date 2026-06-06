@@ -1,3 +1,24 @@
+use bevy::color::{
+    Srgba,
+    palettes::{
+        css::{BLACK, WHITE},
+        tailwind::*,
+    },
+};
+
+// Shared view colors
+pub const VIEW_BACKGROUND_COLOR: Srgba = SLATE_100;
+pub const VIEW_TEXT_COLOR: Srgba = BLACK;
+pub const VIEW_LOGIN_PLACEHOLDER_TEXT_COLOR: Srgba = WHITE;
+pub const VIEW_TITLE_TILE_COLOR: Srgba = SLATE_400;
+pub const VIEW_PANEL_COLOR: Srgba = SLATE_200;
+pub const VIEW_BUTTON_COLOR: Srgba = SLATE_200;
+pub const VIEW_INPUT_FIELD_COLOR: Srgba = SLATE_200;
+pub const VIEW_CROSSWORD_TILE_COLOR: Srgba = SLATE_200;
+pub const VIEW_WORDLE_TILE_COLOR: Srgba = GREEN_400;
+pub const VIEW_FRAGMENT_TILE_COLOR: Srgba = PURPLE_300;
+pub const VIEW_RUNE_TILE_COLOR: Srgba = BLUE_300;
+
 // Shared view layout
 pub const VIEW_ORIGIN_X: f32 = 0.0;
 pub const VIEW_ORIGIN_Y: f32 = 0.0;

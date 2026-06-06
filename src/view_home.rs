@@ -1,10 +1,10 @@
 use crate::constants::{
-    VIEW_CONTENT_Z, VIEW_HOME_BUTTON_FONT_SIZE, VIEW_HOME_BUTTON_HEIGHT, VIEW_HOME_BUTTON_WIDTH,
-    VIEW_HOME_BUTTON_Y_SPACING, VIEW_HOME_BUTTON_Y_START, VIEW_ORIGIN_X, VIEW_ORIGIN_Y,
-    VIEW_ORIGIN_Z, VIEW_TITLE, VIEW_TITLE_TILE_SIZE, VIEW_TITLE_TILE_SPACING, VIEW_TITLE_Y,
+    VIEW_BUTTON_COLOR, VIEW_CONTENT_Z, VIEW_HOME_BUTTON_FONT_SIZE, VIEW_HOME_BUTTON_HEIGHT,
+    VIEW_HOME_BUTTON_WIDTH, VIEW_HOME_BUTTON_Y_SPACING, VIEW_HOME_BUTTON_Y_START, VIEW_ORIGIN_X,
+    VIEW_ORIGIN_Y, VIEW_ORIGIN_Z, VIEW_TEXT_COLOR, VIEW_TITLE, VIEW_TITLE_TILE_COLOR,
+    VIEW_TITLE_TILE_SIZE, VIEW_TITLE_TILE_SPACING, VIEW_TITLE_Y,
 };
 use crate::view_ty::{ViewButton, ViewHomeElement, ViewTile, ViewTitle};
-use bevy::color::palettes::tailwind::*;
 use bevy::prelude::*;
 
 pub fn spawn_home_title(mut commands: Commands) {
@@ -29,14 +29,14 @@ pub fn spawn_home_title(mut commands: Commands) {
                     .with_children(|p2| {
                         p2.spawn((
                             Sprite::from_color(
-                                SLATE_400,
+                                Color::from(VIEW_TITLE_TILE_COLOR),
                                 Vec2::new(VIEW_TITLE_TILE_SIZE, VIEW_TITLE_TILE_SIZE),
                             ),
                             Transform::from_xyz(x, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
                         ));
                         p2.spawn((
                             Text2d::new(letter.to_string()),
-                            TextColor::BLACK,
+                            TextColor(VIEW_TEXT_COLOR.into()),
                             text_font.clone(),
                             Transform::from_xyz(x, VIEW_ORIGIN_Y, VIEW_CONTENT_Z),
                         ));
@@ -59,14 +59,14 @@ pub fn spawn_home_play_button(mut commands: Commands) {
         .with_children(|p1| {
             p1.spawn((
                 Sprite::from_color(
-                    SLATE_200,
+                    VIEW_BUTTON_COLOR,
                     Vec2::new(VIEW_HOME_BUTTON_WIDTH, VIEW_HOME_BUTTON_HEIGHT),
                 ),
                 Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
             ));
             p1.spawn((
                 Text2d::new("PLAY"),
-                TextColor::BLACK,
+                TextColor(VIEW_TEXT_COLOR.into()),
                 play_font,
                 Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_CONTENT_Z),
             ));
@@ -87,14 +87,14 @@ pub fn spawn_home_exit_button(mut commands: Commands) {
         .with_children(|p1| {
             p1.spawn((
                 Sprite::from_color(
-                    SLATE_200,
+                    VIEW_BUTTON_COLOR,
                     Vec2::new(VIEW_HOME_BUTTON_WIDTH, VIEW_HOME_BUTTON_HEIGHT),
                 ),
                 Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
             ));
             p1.spawn((
                 Text2d::new("EXIT"),
-                TextColor::BLACK,
+                TextColor(VIEW_TEXT_COLOR.into()),
                 exit_font,
                 Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_CONTENT_Z),
             ));
