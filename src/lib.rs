@@ -11,8 +11,8 @@ mod view_wordle;
 use crate::game_states::{View, system_cycle_view_state};
 use crate::setup::setup_system;
 use crate::view_crafting::{
-    hide_crafting_elements, show_crafting_elements, spawn_crafting_frag_display,
-    spawn_crafting_rune_display,
+    hide_crafting_elements, show_crafting_elements, spawn_crafting_box,
+    spawn_crafting_frag_display, spawn_crafting_rune_display,
 };
 use crate::view_crossword::{
     hide_crossword_elements, show_crossword_elements, spawn_crossword_board,
@@ -51,6 +51,7 @@ pub fn plugin(app: &mut App) {
             spawn_wordle_frag_display,
             spawn_wordle_rune_display,
             spawn_crafting_frag_display,
+            spawn_crafting_box,
             spawn_crafting_rune_display,
             spawn_crossword_board,
             spawn_crossword_frag_display,

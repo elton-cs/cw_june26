@@ -1,9 +1,11 @@
 use crate::constants::{
-    VIEW_CONTENT_Z, VIEW_FRAG_RUNE_COLUMNS, VIEW_FRAG_RUNE_DEFAULT_WINDOW_WIDTH,
-    VIEW_FRAG_RUNE_EDGE_MARGIN, VIEW_FRAG_RUNE_NUMBER_BOTTOM_OFFSET, VIEW_FRAG_RUNE_PADDING,
-    VIEW_FRAG_RUNE_ROWS, VIEW_FRAG_RUNE_TILE_COUNT, VIEW_FRAG_RUNE_TILE_SIZE,
-    VIEW_FRAG_RUNE_TILE_SPACING, VIEW_FRAGMENT_TILE_COLOR, VIEW_ORIGIN_X, VIEW_ORIGIN_Y,
-    VIEW_ORIGIN_Z, VIEW_OVERLAY_Z, VIEW_PANEL_COLOR, VIEW_RUNE_TILE_COLOR, VIEW_TEXT_COLOR,
+    VIEW_CONTENT_Z, VIEW_CRAFTING_BOX_PADDING, VIEW_CRAFTING_TILE_COLOR, VIEW_CRAFTING_TILE_COUNT,
+    VIEW_CRAFTING_TILE_SIZE, VIEW_CRAFTING_TILE_SPACING, VIEW_FRAG_RUNE_COLUMNS,
+    VIEW_FRAG_RUNE_DEFAULT_WINDOW_WIDTH, VIEW_FRAG_RUNE_EDGE_MARGIN,
+    VIEW_FRAG_RUNE_NUMBER_BOTTOM_OFFSET, VIEW_FRAG_RUNE_PADDING, VIEW_FRAG_RUNE_ROWS,
+    VIEW_FRAG_RUNE_TILE_COUNT, VIEW_FRAG_RUNE_TILE_SIZE, VIEW_FRAG_RUNE_TILE_SPACING,
+    VIEW_FRAGMENT_TILE_COLOR, VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z, VIEW_OVERLAY_Z,
+    VIEW_PANEL_COLOR, VIEW_RUNE_TILE_COLOR, VIEW_TEXT_COLOR,
 };
 use crate::view_ty::{DisplaySide, DisplayTileColor, ViewCraftingElement, ViewTile};
 use bevy::prelude::*;
@@ -31,6 +33,63 @@ pub fn spawn_crafting_rune_display(
         DisplayTileColor::Blue,
         DisplaySide::Right,
     );
+}
+
+pub fn spawn_crafting_box(mut commands: Commands) {
+    let tile_positions = [
+        (-1.0, 1.0),
+        (1.0, 1.0),
+        (0.0, 0.0),
+        (-1.0, -1.0),
+        (1.0, -1.0),
+    ];
+    debug_assert_eq!(tile_positions.len(), VIEW_CRAFTING_TILE_COUNT);
+
+    let max_offset = tile_positions
+        .iter()
+        .map(|(x, y)| f32::max(f32::abs(*x), f32::abs(*y)))
+        .fold(0.0_f32, |acc, value| acc.max(value));
+
+    let box_width = (max_offset * 2.0 * VIEW_CRAFTING_TILE_SPACING)
+        + VIEW_CRAFTING_TILE_SIZE
+        + VIEW_CRAFTING_BOX_PADDING * 2.0;
+    let box_height = (max_offset * 2.0 * VIEW_CRAFTING_TILE_SPACING)
+        + VIEW_CRAFTING_TILE_SIZE
+        + VIEW_CRAFTING_BOX_PADDING * 2.0;
+
+    commands
+        .spawn((
+            ViewCraftingElement,
+            Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
+            Visibility::Hidden,
+        ))
+        .with_children(|p1| {
+            p1.spawn((
+                Sprite::from_color(VIEW_PANEL_COLOR, Vec2::new(box_width, box_height)),
+                Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
+            ));
+
+            for (x_offset, y_offset) in tile_positions {
+                p1.spawn((
+                    ViewTile,
+                    Transform::from_xyz(
+                        x_offset * VIEW_CRAFTING_TILE_SPACING,
+                        y_offset * VIEW_CRAFTING_TILE_SPACING,
+                        VIEW_CONTENT_Z,
+                    ),
+                    Visibility::default(),
+                ))
+                .with_children(|p2| {
+                    p2.spawn((
+                        Sprite::from_color(
+                            Color::from(VIEW_CRAFTING_TILE_COLOR),
+                            Vec2::new(VIEW_CRAFTING_TILE_SIZE, VIEW_CRAFTING_TILE_SIZE),
+                        ),
+                        Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
+                    ));
+                });
+            }
+        });
 }
 
 pub fn show_crafting_elements(mut elements: Query<&mut Visibility, With<ViewCraftingElement>>) {
