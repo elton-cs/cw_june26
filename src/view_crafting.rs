@@ -1,13 +1,15 @@
 use crate::constants::{
-    VIEW_CONTENT_Z, VIEW_CRAFTING_BOX_PADDING, VIEW_CRAFTING_TILE_COLOR, VIEW_CRAFTING_TILE_COUNT,
-    VIEW_CRAFTING_TILE_SIZE, VIEW_CRAFTING_TILE_SPACING, VIEW_FRAG_RUNE_COLUMNS,
-    VIEW_FRAG_RUNE_DEFAULT_WINDOW_WIDTH, VIEW_FRAG_RUNE_EDGE_MARGIN,
+    VIEW_BUTTON_COLOR, VIEW_CONTENT_Z, VIEW_CRAFTING_BOX_PADDING, VIEW_CRAFTING_TILE_COLOR,
+    VIEW_CRAFTING_TILE_COUNT, VIEW_CRAFTING_TILE_SIZE, VIEW_CRAFTING_TILE_SPACING,
+    VIEW_FRAG_RUNE_COLUMNS, VIEW_FRAG_RUNE_DEFAULT_WINDOW_WIDTH, VIEW_FRAG_RUNE_EDGE_MARGIN,
     VIEW_FRAG_RUNE_NUMBER_BOTTOM_OFFSET, VIEW_FRAG_RUNE_PADDING, VIEW_FRAG_RUNE_ROWS,
     VIEW_FRAG_RUNE_TILE_COUNT, VIEW_FRAG_RUNE_TILE_SIZE, VIEW_FRAG_RUNE_TILE_SPACING,
-    VIEW_FRAGMENT_TILE_COLOR, VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z, VIEW_OVERLAY_Z,
-    VIEW_PANEL_COLOR, VIEW_RUNE_TILE_COLOR, VIEW_TEXT_COLOR,
+    VIEW_FRAGMENT_TILE_COLOR, VIEW_LOGIN_BUTTON_FONT_SIZE, VIEW_LOGIN_BUTTON_HEIGHT,
+    VIEW_LOGIN_BUTTON_WIDTH, VIEW_LOGIN_ELEMENT_Y_SPACING, VIEW_LOGIN_INPUT_Y_START, VIEW_ORIGIN_X,
+    VIEW_ORIGIN_Y, VIEW_ORIGIN_Z, VIEW_OVERLAY_Z, VIEW_PANEL_COLOR, VIEW_RUNE_TILE_COLOR,
+    VIEW_TEXT_COLOR,
 };
-use crate::view_ty::{DisplaySide, DisplayTileColor, ViewCraftingElement, ViewTile};
+use crate::view_ty::{DisplaySide, DisplayTileColor, ViewButton, ViewCraftingElement, ViewTile};
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
 
@@ -89,6 +91,34 @@ pub fn spawn_crafting_box(mut commands: Commands) {
                     ));
                 });
             }
+        });
+}
+
+pub fn spawn_crafting_button(mut commands: Commands) {
+    let craft_font = TextFont::from_font_size(VIEW_LOGIN_BUTTON_FONT_SIZE);
+    let craft_y = VIEW_LOGIN_INPUT_Y_START - VIEW_LOGIN_ELEMENT_Y_SPACING;
+
+    commands
+        .spawn((
+            ViewButton,
+            ViewCraftingElement,
+            Transform::from_xyz(VIEW_ORIGIN_X, craft_y, VIEW_ORIGIN_Z),
+            Visibility::Hidden,
+        ))
+        .with_children(|p1| {
+            p1.spawn((
+                Sprite::from_color(
+                    VIEW_BUTTON_COLOR,
+                    Vec2::new(VIEW_LOGIN_BUTTON_WIDTH, VIEW_LOGIN_BUTTON_HEIGHT),
+                ),
+                Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_ORIGIN_Z),
+            ));
+            p1.spawn((
+                Text2d::new("CRAFT"),
+                TextColor(VIEW_TEXT_COLOR.into()),
+                craft_font,
+                Transform::from_xyz(VIEW_ORIGIN_X, VIEW_ORIGIN_Y, VIEW_CONTENT_Z),
+            ));
         });
 }
 

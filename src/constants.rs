@@ -28,7 +28,7 @@ pub const VIEW_OVERLAY_Z: f32 = 2.0;
 
 // Title layout
 pub const VIEW_TITLE: &str = "CROSSWORDLE";
-pub const VIEW_TITLE_Y: f32 = 100.0;
+pub const VIEW_TITLE_Y: f32 = VIEW_CRAFTING_TILE_SPACING;
 pub const VIEW_TITLE_TILE_SIZE: f32 = 80.;
 pub const VIEW_TITLE_TILE_SPACING: f32 = VIEW_TITLE_TILE_SIZE * 1.1;
 
